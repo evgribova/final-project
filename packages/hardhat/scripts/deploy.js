@@ -1,17 +1,30 @@
+import { ethers, network, run } from "hardhat";
+
 async function main() {
   const [deployer] = await ethers.getSigners();
-  console.log("Deploying contracts with the account:", deployer.address);
+  console.log("⛏️  Deploying with account:", deployer.address);
+  console.log("🌐  Network:", network.name);
 
-  // Деплой вашего контракта
-  const NFTMarketplace = await ethers.getContractFactory("NFTMarketplace");
-  const nftMarketplace = await NFTMarketplace.deploy();
+  const Factory = await ethers.getContractFactory("DigitalAssetMarketplace");
 
-  console.log("NFTMarketplace deployed to:", nftMarketplace.address);
+  const instance = await Factory.deploy(/* args если есть */);
+  await instance.deployed();
+
+  console.log(`✅ DigitalAssetMarketplace deployed at: ${instance.address}`);
+
+  // Опциональная верификация
+  if (network.name !== "hardhat" && process.env.ETHERSCAN_API_KEY) {
+    await run("verify:verify", {
+      address: instance.address,
+      constructorArguments: [], // или твои аргументы
+    });
+    console.log("✅ Verified on Etherscan");
+  }
 }
 
 main()
   .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
+  .catch(err => {
+    console.error(err);
     process.exit(1);
   });

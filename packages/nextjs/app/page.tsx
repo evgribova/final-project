@@ -10,61 +10,67 @@ const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
 
   return (
-    <>
-      <div className="flex items-center flex-col grow pt-10">
-        <div className="px-5">
-          <h1 className="text-center">
-            <span className="block text-2xl mb-2">Welcome to</span>
-            <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
-          </h1>
-          <div className="flex justify-center items-center space-x-2 flex-col">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
-          </div>
-          <p className="text-center text-lg">
-            Get started by editing{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/nextjs/app/page.tsx
-            </code>
-          </p>
-          <p className="text-center text-lg">
-            Edit your smart contract{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              YourContract.sol
-            </code>{" "}
-            in{" "}
-            <code className="italic bg-base-300 text-base font-bold max-w-full break-words break-all inline-block">
-              packages/hardhat/contracts
-            </code>
-          </p>
-        </div>
+    <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
+      {/* Header */}
+      <header className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 p-8 rounded-b-3xl shadow-lg">
+        <h1 className="text-center text-5xl font-extrabold text-white">
+          <span className="block">Приветствуем в</span>
+          <span className="block text-6xl">DigitalAssetMarketplace</span>
+        </h1>
+      </header>
 
-        <div className="grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col md:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
+      {/* Main */}
+      <div className="flex flex-col md:flex-row flex-grow p-8 gap-8">
+        {/* Connected Address */}
+        <aside className="md:w-1/3 bg-white p-6 rounded-2xl shadow-xl">
+          <p className="mb-4 text-lg font-medium">Подключенный адрес:</p>
+          <Address address={connectedAddress} className="break-all font-mono bg-gray-100 p-3 rounded-lg shadow-inner" />
+        </aside>
+
+        {/* Action Cards */}
+        <section className="md:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Debug Contract Card */}
+          <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow flex flex-col">
+            <div className="flex justify-center mb-4">
+              <BugAntIcon className="h-12 w-12 text-indigo-500" />
             </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
+            <p className="mb-6 text-center text-lg flex-grow">
+              Тестируйте и отлаживайте контракт во вкладке{" "}
+              <Link href="/debug" className="text-indigo-600 font-semibold hover:underline">
+                Debug Contracts
+              </Link>
+              .
+            </p>
+            <Link
+              href="/debug"
+              className="inline-block text-center w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition"
+            >
+              Перейти к отладке
+            </Link>
           </div>
-        </div>
+
+          {/* Block Explorer Card */}
+          <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow flex flex-col">
+            <div className="flex justify-center mb-4">
+              <MagnifyingGlassIcon className="h-12 w-12 text-purple-500" />
+            </div>
+            <p className="mb-6 text-center text-lg flex-grow">
+              Проверяйте историю транзакций в{" "}
+              <Link href="/blockexplorer" className="text-purple-600 font-semibold hover:underline">
+                Block Explorer
+              </Link>
+              .
+            </p>
+            <Link
+              href="/blockexplorer"
+              className="inline-block text-center w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition"
+            >
+              Открыть Explorer
+            </Link>
+          </div>
+        </section>
       </div>
-    </>
+    </div>
   );
 };
 
